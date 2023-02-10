@@ -17,23 +17,25 @@ SRC 	= 	checker2map.c \
 			ft_printf/ft_putaddr.c \
 			ft_printf/ft_formatfiltre.c \
 		
-LIB 	= /Users/ddelacou/MLX42/include -lglfw -L /Users/ddelacou/.brew/opt/glfw/lib		
+INC	= -I /Users/$$USER/MLX42/include -I get_next_line -I ft_printf
 
+LIB 	= /Users/$$USER/MLX42/libmlx42.a -lglfw -L /Users/$$USER/.brew/opt/glfw/lib		
 
 OBJS 	= ${SRC:.c=.o}
 
 NAME	= solong.a
 
-FLAG 	= -Wall -Werror -Wextra 
+FLAGS 	= -Wall -Werror -Wextra 
 
-CC 	= gcc ${FLAG}
-
+CC 	= gcc
 
 all	: ${NAME}
 
+.c.o:
+	${CC} ${CFLAGS} -I ${INC} -c $< -o ${<:.c=.o}
 
 ${NAME}	: ${OBJS}
-	  ar rc ${NAME} ${OBJS} 
+	  ${CC} ${FLAGS} ${LIB} -o ${NAME}
 	  ranlib ${NAME}
 
 clean	: 
@@ -45,3 +47,5 @@ fclean  : clean
 
 	
 re	: fclean all
+
+.PHONY: all clean fclean re
